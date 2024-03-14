@@ -11,13 +11,17 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.intercept.AuthorizationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    @Bean
+    /*@Bean
     public String contextHolder() {
         SecurityContext context = SecurityContextHolder.createEmptyContext();
         Authentication authentication =
@@ -26,7 +30,7 @@ public class SecurityConfig {
 
         SecurityContextHolder.setContext(context);
         return "";
-    }
+    }*/
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -41,6 +45,18 @@ public class SecurityConfig {
             .addFilterBefore(new TenantFilter(), AuthorizationFilter.class);
         return http.build();
     }
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+        UserDetails userDetails = User.withDefaultPasswordEncoder()
+            .username("user")
+            .password("password")
+            .roles("USER")
+            .build();
+
+        return new InMemoryUserDetailsManager(userDetails);
+    }
+
 
     // 필터가 한번만 실행 되도록 설정
     @Bean

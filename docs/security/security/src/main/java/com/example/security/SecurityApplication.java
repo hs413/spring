@@ -15,14 +15,14 @@ public class SecurityApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SecurityApplication.class, args);
 
-		// context holder test - start
+		/*// context holder test - start
 		SecurityContext context = SecurityContextHolder.getContext();
 		Authentication authentication = context.getAuthentication();
 		String username = authentication.getName();
 		Object principal = authentication.getPrincipal();
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 		System.out.println(username);
-		// context holder test - end
+		// context holder test - end*/
 	}
 
 }
