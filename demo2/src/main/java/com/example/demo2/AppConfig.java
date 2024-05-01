@@ -1,6 +1,8 @@
 package com.example.demo2;
 
+import com.example.demo2.discount.DiscountPolicy;
 import com.example.demo2.discount.FixDiscountPolicy;
+import com.example.demo2.member.MemberRepository;
 import com.example.demo2.member.MemberService;
 import com.example.demo2.member.MemberServiceImpl;
 import com.example.demo2.member.MemoryMemberRepository;
@@ -13,12 +15,20 @@ import com.example.demo2.order.OrderServiceImpl;
  * */
 public class AppConfig {
     public MemberService memberService() {
-        return new MemberServiceImpl(new MemoryMemberRepository());
+        return new MemberServiceImpl(memberRepository());
     }
 
     public OrderService orderService() {
         return new OrderServiceImpl(
-            new MemoryMemberRepository(),
-            new FixDiscountPolicy());
+            memberRepository(),
+            discountPolicy());
+    }
+
+    public MemberRepository memberRepository() {
+        return new MemoryMemberRepository();
+    }
+
+    public DiscountPolicy discountPolicy() {
+        return new FixDiscountPolicy();
     }
 }
