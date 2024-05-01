@@ -1,7 +1,11 @@
 package com.example.demo2.member;
 
 public class MemberServiceImpl implements MemberService {
-    private final MemberRepository memberRepository = new MemoryMemberRepository();
+    private final MemberRepository memberRepository;
+
+    public MemberServiceImpl(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
 
     public void join(Member member) {
         memberRepository.save(member);

@@ -1,16 +1,19 @@
 package com.example.demo2.order;
 
 import com.example.demo2.discount.DiscountPolicy;
-import com.example.demo2.discount.FixDiscountPolicy;
-import com.example.demo2.discount.RateDiscountPolicy;
 import com.example.demo2.member.Member;
 import com.example.demo2.member.MemberRepository;
-import com.example.demo2.member.MemoryMemberRepository;
 
 public class OrderServiceImpl implements OrderService {
-    private final MemberRepository memberRepository = new MemoryMemberRepository();
+    private final MemberRepository memberRepository;
 //    private final DiscountPolicy discountPolicy = new FixDiscountPolicy();
-    private final DiscountPolicy discountPolicy = new RateDiscountPolicy();
+//    private final DiscountPolicy discountPolicy = new RateDiscountPolicy();
+    private final DiscountPolicy discountPolicy;
+
+    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
