@@ -7,8 +7,17 @@
 <body>
     <h1>데이터 출력</h1>
     <ul>
-        <li>th:text: <span th:text="${data}"></span></li>
-        <li>직접 출력: [[${data}]]</li>
+        <!-- escape -->
+<!--        <li>th:text: <span th:text="${data}"></span></li>-->
+<!--        <li>직접 출력: [[${data}]]</li>-->
+
+        <!-- unescape -->
+        <li>th:text: <span th:utext="${data}"></span></li>
+        <li>직접 출력: [(${data})]</li>
     </ul>
+
+    <!-- inline="none -->
+    <span>[[]] vs [()]</span>
+    <span th:inline="none">[[]] vs [()]</span>
 </body>
 </html>
