@@ -1,6 +1,6 @@
 package hello.itemservice.repository;
 
-import hello.itemservice.domain.item.Item;
+import hello.itemservice.domain.Item;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,6 +1,6 @@
 package hello.itemservice.service;
 
-import hello.itemservice.domain.item.Item;
+import hello.itemservice.domain.Item;
 import hello.itemservice.repository.ItemSearchCond;
 import hello.itemservice.repository.ItemUpdateDto;
 
