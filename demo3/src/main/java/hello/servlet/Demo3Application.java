@@ -1,4 +1,4 @@
-package com.example.demo3;
+package hello.servlet;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
