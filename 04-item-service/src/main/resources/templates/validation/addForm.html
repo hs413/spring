@@ -63,16 +63,15 @@
                        class="form-control" placeholder="가격을 입력하세요">
                 <div class="field-error"
                      th:if="${errors?.containsKey('price')}"
-                     th:text="${errors['price']}">상품명 오류</div>
+                     th:text="${errors['price']}">가격 오류</div>
             </div>
             -->
             <div>
                 <label for="itemName" >가격</label>
-                <label for="itemName" >가격</label>
                 <input type="text" id="price"
                        th:field="*{price}" th:errorclass="field-error"
-                       class="form-control" placeholder="이름을 입력하세요">
-                <div class="field-error" th:errors="*{price}">상품명 오류</div>
+                       class="form-control" placeholder="가격을 입력하세요">
+                <div class="field-error" th:errors="*{price}">가격 오류</div>
             </div>
             <!--
             <div>
@@ -82,15 +81,15 @@
                        class="formcontrol" placeholder="수량을 입력하세요">
                 <div class="field-error"
                      th:if="${errors?.containsKey('quantity')}"
-                     th:text="${errors['quantity']}">상품명 오류</div>
+                     th:text="${errors['quantity']}">수량 오류</div>
             </div>
             -->
             <div>
                 <label for="itemName" >수량</label>
                 <input type="text" id="quantity"
                        th:field="*{quantity}" th:errorclass="field-error"
-                       class="form-control" placeholder="이름을 입력하세요">
-                <div class="field-error" th:errors="*{quantity}">상품명 오류</div>
+                       class="form-control" placeholder="수량을 입력하세요">
+                <div class="field-error" th:errors="*{quantity}">수량 오류</div>
             </div>
             <hr class="my-4">
 
