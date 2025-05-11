@@ -32,7 +32,7 @@ import java.util.Map;
 
 @Slf4j
 @Controller
-@RequestMapping("/validation/items")
+@RequestMapping("/validation/v2/items")
 @RequiredArgsConstructor
 public class ValidationItemControllerV2 {
     private final ItemRepository itemRepository;
