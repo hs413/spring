@@ -1,6 +1,6 @@
 package hello.itemservice.repository;
 
-import hello.itemservice.domain.item.Item;
+import hello.itemservice.domain.Item;
 import hello.itemservice.repository.memory.MemoryItemRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
