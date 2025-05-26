@@ -1,20 +1,22 @@
-
 package hello.itemservice.config;
 
 import hello.itemservice.repository.ItemRepository;
-import hello.itemservice.repository.mybatis.ItemMapper;
-import hello.itemservice.repository.mybatis.MyBatisItemRepository;
+import hello.itemservice.repository.jpa.JpaItemRepositoryV1;
+import hello.itemservice.repository.memory.MemoryItemRepository;
 import hello.itemservice.service.ItemService;
 import hello.itemservice.service.ItemServiceV1;
-import lombok.RequiredArgsConstructor;
+import jakarta.persistence.EntityManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-//@Configuration
-@RequiredArgsConstructor
-public class MyBatisConfig {
+@Configuration
+public class JpaConfig {
 
-    private final ItemMapper itemMapper;
+    private final EntityManager em;
+
+    public JpaConfig(EntityManager em) {
+        this.em = em;
+    }
 
     @Bean
     public ItemService itemService() {
@@ -23,6 +25,6 @@ public class MyBatisConfig {
 
     @Bean
     public ItemRepository itemRepository() {
-        return new MyBatisItemRepository(itemMapper);
+        return new JpaItemRepositoryV1(em);
     }
 }
