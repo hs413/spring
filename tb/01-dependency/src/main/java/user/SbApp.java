@@ -1,12 +1,16 @@
 package user;
 
+import java.sql.Connection;
 import java.sql.SQLException;
+import user.dao.ConnectionMaker;
+import user.dao.DConnectionMaker;
 import user.dao.UserDao;
 import user.domain.User;
 
 public class SbApp {
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
-        UserDao userDao = new UserDao();
+        ConnectionMaker connectionMaker = new DConnectionMaker();
+        UserDao userDao = new UserDao(connectionMaker);
 
         User user = new User();
         user.setId("user1");
