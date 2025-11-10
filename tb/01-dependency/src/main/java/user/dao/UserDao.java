@@ -49,4 +49,13 @@ public class UserDao {
 
         return user;
     }
+//    private DataSource dataSource;
+//
+//    public void setDataSource(DataSource dataSource) {
+//        this.dataSource = dataSource;
+//    }
+//
+//    public void add(User user) throws SQLException {
+//        Connection c = dataSource.getConnection();
+//    }
 }
