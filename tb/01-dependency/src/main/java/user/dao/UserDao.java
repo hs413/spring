@@ -1,7 +1,6 @@
 package user.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -65,18 +64,17 @@ public class UserDao {
 //        Connection c = dataSource.getConnection();
 //    }
 
-    public void deleteAll() throws ClassNotFoundException, SQLException {
+    public void jdbcWithStrategy(StatementStrategy stmt) throws ClassNotFoundException, SQLException {
         Connection c = null;
         PreparedStatement ps = null;
 
         try {
             c = connectionMaker.makeNewConnection();
 
-            StatementStrategy strategy = new DeleteAllStatement();
-            ps = strategy.makePreparedStatement(c);
+            ps = stmt.makePreparedStatement(c);
 
             ps.executeUpdate();
-        } catch (SQLException e) {
+        }catch (SQLException e) {
             throw e;
         } finally {
             if (ps != null) {
@@ -95,6 +93,11 @@ public class UserDao {
                 }
             }
         }
+    }
+
+    public void deleteAll() throws ClassNotFoundException, SQLException {
+        StatementStrategy st = new DeleteAllStatement();
+        jdbcWithStrategy(st);
     }
 
     private PreparedStatement makeStatement(Connection c) throws SQLException {
