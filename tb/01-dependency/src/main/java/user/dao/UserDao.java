@@ -71,7 +71,10 @@ public class UserDao {
 
         try {
             c = connectionMaker.makeNewConnection();
-            ps = makeStatement(c);
+
+            StatementStrategy strategy = new DeleteAllStatement();
+            ps = strategy.makePreparedStatement(c);
+
             ps.executeUpdate();
         } catch (SQLException e) {
             throw e;
