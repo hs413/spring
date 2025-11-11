@@ -9,6 +9,12 @@ import user.domain.User;
 public class UserDao {
     private ConnectionMaker connectionMaker;
 
+    private JdbcContext jdbcContext;
+
+    public void setJdbcContext(JdbcContext jdbcContext) {
+        this.jdbcContext = jdbcContext;
+    }
+
     public UserDao(ConnectionMaker connectionMaker) {
         this.connectionMaker = connectionMaker;
     }
@@ -64,48 +70,12 @@ public class UserDao {
 //        Connection c = dataSource.getConnection();
 //    }
 
-    public void jdbcWithStrategy(StatementStrategy stmt) throws ClassNotFoundException, SQLException {
-        Connection c = null;
-        PreparedStatement ps = null;
-
-        try {
-            c = connectionMaker.makeNewConnection();
-
-            ps = stmt.makePreparedStatement(c);
-
-            ps.executeUpdate();
-        }catch (SQLException e) {
-            throw e;
-        } finally {
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    throw e;
-                }
-            }
-
-            if (c != null) {
-                try {
-                    c.close();
-                } catch (SQLException e) {
-                    throw e;
-                }
-            }
-        }
-    }
 
     public void deleteAll() throws ClassNotFoundException, SQLException {
-        StatementStrategy st = new DeleteAllStatement();
-        jdbcWithStrategy(st);
+        this.jdbcContext.executeSql("delete from users");
     }
 
-    private PreparedStatement makeStatement(Connection c) throws SQLException {
-        PreparedStatement ps;
-        ps = c.prepareStatement("delete from users");
 
-        return ps;
-    }
 
     public int getCount() throws ClassNotFoundException, SQLException {
         Connection c = null;
