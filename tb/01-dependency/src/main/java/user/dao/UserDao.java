@@ -1,69 +1,51 @@
 package user.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.sql.DataSource;
+import org.springframework.jdbc.core.JdbcTemplate;
 import user.domain.User;
 
 public class UserDao {
-    private ConnectionMaker connectionMaker;
+    private DataSource dataSource;
+    private JdbcTemplate jdbcTemplate;
 
-    private JdbcContext jdbcContext;
-
-    public void setJdbcContext(JdbcContext jdbcContext) {
-        this.jdbcContext = jdbcContext;
+    public void setDataSource(DataSource DataSource) {
+        this.jdbcTemplate = new JdbcTemplate(DataSource);
+        this.dataSource = DataSource;
     }
 
-    public UserDao(ConnectionMaker connectionMaker) {
-        this.connectionMaker = connectionMaker;
-    }
 
     public void add(User user) throws ClassNotFoundException, SQLException {
-        Connection c = connectionMaker.makeNewConnection();
-
-        PreparedStatement ps = c.prepareStatement("insert into users(id, name, password) values(?,?,?)");
-        ps.setString(1, user.getId());
-        ps.setString(2, user.getName());
-        ps.setString(3, user.getPassword());
-
-        ps.executeUpdate();
-
-        ps.close();
-        c.close();
+        this.jdbcTemplate.update("insert into users(id, name, password) values(?,?,?)",
+                user.getId(), user.getName(), user.getPassword());
     }
 
-    public User get(String id) throws ClassNotFoundException, SQLException {
-        Connection c = connectionMaker.makeNewConnection();
-
-        PreparedStatement ps = c.prepareStatement("select * from users where id = ?");
-        ps.setString(1, id);
-
-        ResultSet rs = ps.executeQuery();
-
-        User user = null;
-
-        if (rs.next()) {
-            user = new User();
-            user.setId(rs.getString("id"));
-            user.setName(rs.getString("name"));
-            user.setPassword(rs.getString("password"));
-        }
-
-        rs.close();
-        ps.close();
-        c.close();
-
-        if (user == null) {
-            throw new EmptyResultDataAccessException(1);
-        }
-
-        return user;
-    }
-//    private DataSource dataSource;
+    //    public User get(String id) throws ClassNotFoundException, SQLException {
+//        Connection c = connectionMaker.makeNewConnection();
 //
-//    public void setDataSource(DataSource dataSource) {
-//        this.dataSource = dataSource;
+//        PreparedStatement ps = c.prepareStatement("select * from users where id = ?");
+//        ps.setString(1, id);
+//
+//        ResultSet rs = ps.executeQuery();
+//
+//        User user = null;
+//
+//        if (rs.next()) {
+//            user = new User();
+//            user.setId(rs.getString("id"));
+//            user.setName(rs.getString("name"));
+//            user.setPassword(rs.getString("password"));
+//        }
+//
+//        rs.close();
+//        ps.close();
+//        c.close();
+//
+//        if (user == null) {
+//            throw new EmptyResultDataAccessException(1);
+//        }
+//
+//        return user;
 //    }
 //
 //    public void add(User user) throws SQLException {
@@ -72,48 +54,20 @@ public class UserDao {
 
 
     public void deleteAll() throws ClassNotFoundException, SQLException {
-        this.jdbcContext.executeSql("delete from users");
+//        this.jdbcTemplate.update(
+//                new PreparedStatementCreator() {
+//                    public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+//                        return con.prepareStatement("DELETE FROM users");
+//                    }
+//                }
+//        );
+
+        this.jdbcTemplate.update("DELETE FROM users");
     }
 
 
-
-    public int getCount() throws ClassNotFoundException, SQLException {
-        Connection c = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-
-        try {
-            c = connectionMaker.makeNewConnection();
-            ps = c.prepareStatement("select count(*) from users");
-            rs = ps.executeQuery();
-            rs.next();
-            return rs.getInt(1);
-        } catch (SQLException e) {
-            throw e;
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    throw e;
-                }
-            }
-
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    throw e;
-                }
-            }
-
-            if (c != null) {
-                try {
-                    c.close();
-                } catch (SQLException e) {
-                    throw e;
-                }
-            }
-        }
-    }
+//
+//    public int getCount() throws ClassNotFoundException, SQLException {
+//        return this.jdbcTemplate.queryForInt();
+//    }
 }
