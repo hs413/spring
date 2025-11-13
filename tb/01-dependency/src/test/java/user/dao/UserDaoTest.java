@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import user.domain.Level;
 import user.domain.User;
 
 class UserDaoTest {
@@ -23,9 +24,9 @@ class UserDaoTest {
         ApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
         this.dao = (UserDao) context.getBean("userDao");
 
-        this.user1 = new User("1", "user1", "password1");
-        this.user2 = new User("2", "user2", "password2");
-        this.user3 = new User("3", "user3", "password3");
+        this.user1 = new User("1", "user1", "password1", Level.BASIC, 1, 0);
+        this.user2 = new User("2", "user2", "password2", Level.SILVER, 55, 10);
+        this.user3 = new User("3", "user3", "password3", Level.GOLD, 100, 40);
     }
 
     @Test
